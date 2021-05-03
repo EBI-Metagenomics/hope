@@ -1,0 +1,5 @@
+add_executable(test_hope hope.c)
+target_link_libraries(test_hope HOPE::hope)
+target_compile_options(test_hope PRIVATE ${WARNING_FLAGS})
+target_compile_features(test_hope PRIVATE c_std_11)
+add_test(NAME hope COMMAND test_hope)
