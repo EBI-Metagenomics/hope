@@ -74,7 +74,8 @@ __MAKE_EQ(int8, int8_t, PRIi8)
              : __hope_eq_int64, int32_t                                        \
              : __hope_eq_int32, int16_t                                        \
              : __hope_eq_int16, int8_t                                         \
-             : __hope_eq_int8, char *                                          \
+             : __hope_eq_int8, char                                            \
+             : __hope_eq_char, char *                                          \
              : __hope_eq_str, char const *                                     \
              : __hope_eq_str)((actual), (desired), file, line)
 
@@ -101,6 +102,19 @@ static void __hope_notnull(void const *addr, int cond, char const *expr,
         fprintf(stderr, " Address should not be NULL:\n");
         fprintf(stderr, "  ADDRESS   : %p\n", addr);
         fprintf(stderr, "  EXPRESSION: %s\n", expr);
+        __hope_print_newline();
+        ++__hope_errors;
+    }
+}
+
+static void __hope_eq_char(char a, char d, char const *file, int line)
+{
+    if (a != d)
+    {
+        __hope_print_context(file, line);
+        fprintf(stderr, " Chars are not equal:\n");
+        fprintf(stderr, "  ACTUAL : %c\n", a);
+        fprintf(stderr, "  DESIRED: %c\n", d);
         __hope_print_newline();
         ++__hope_errors;
     }
