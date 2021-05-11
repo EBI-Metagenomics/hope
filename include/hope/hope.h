@@ -10,7 +10,7 @@
     __hope_close2((double)(actual), (double)(desired), (double)(rel_tol),      \
                   (double)(abs_tol), __FILE__, __LINE__)
 
-#define EQ(actual, desired) __hope_eq(actual, desired, __FILE__, __LINE__)
+#define EQ(actual, desired) __hope_eq((actual), (desired), __FILE__, __LINE__)
 
 #define ISNULL(a)                                                              \
     __hope_isnull((void const *)(a), (a) != NULL, #a, __FILE__, __LINE__)

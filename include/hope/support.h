@@ -55,16 +55,35 @@ static void __hope_close2(double actual, double desired, double rel_tol,
         }                                                                      \
     }
 
-__MAKE_EQ(uint64, uint64_t, PRIu64)
-__MAKE_EQ(uint32, uint32_t, PRIu32)
-__MAKE_EQ(uint16, uint16_t, PRIu16)
-__MAKE_EQ(uint8, uint8_t, PRIu8)
+__MAKE_EQ(hhu, unsigned char, "hhu")
+__MAKE_EQ(hu, unsigned short, "hu")
+__MAKE_EQ(u, unsigned int, "u")
+__MAKE_EQ(lu, unsigned long, "lu")
+__MAKE_EQ(llu, unsigned long long, "llu")
 
-__MAKE_EQ(int64, int64_t, PRIi64)
-__MAKE_EQ(int32, int32_t, PRIi32)
-__MAKE_EQ(int16, int16_t, PRIi16)
-__MAKE_EQ(int8, int8_t, PRIi8)
+__MAKE_EQ(hhd, signed char, "hhd")
+__MAKE_EQ(hd, short, "hd")
+__MAKE_EQ(d, int, "d")
+__MAKE_EQ(ld, long, "ld")
+__MAKE_EQ(lld, long long, "lld")
 
+#define __hope_eq(actual, desired, file, line)                                 \
+    _Generic((actual),                                                         \
+             unsigned char: __hope_eq_hhu,                                     \
+             unsigned short: __hope_eq_hu,                                     \
+             unsigned int: __hope_eq_u,                                        \
+             unsigned long: __hope_eq_lu,                                      \
+             unsigned long long: __hope_eq_llu,                                \
+             signed char: __hope_eq_hhd,                                       \
+             short: __hope_eq_hd,                                              \
+             int: __hope_eq_d,                                                 \
+             long: __hope_eq_ld,                                               \
+             long long: __hope_eq_lld,                                         \
+             char: __hope_eq_char,                                             \
+             char *: __hope_eq_str,                                            \
+             char const *: __hope_eq_str)((actual), (desired), file, line)
+
+#if 0
 #define __hope_eq(actual, desired, file, line)                                 \
     _Generic((actual), uint64_t                                                \
              : __hope_eq_uint64, uint32_t                                      \
@@ -77,7 +96,14 @@ __MAKE_EQ(int8, int8_t, PRIi8)
              : __hope_eq_int8, char                                            \
              : __hope_eq_char, char *                                          \
              : __hope_eq_str, char const *                                     \
-             : __hope_eq_str)((actual), (desired), file, line)
+             : __hope_eq_str, unsigned int                                     \
+             : __hope_eq_u , unsigned long                                     \
+             : __hope_eq_lu, unsigned long long                                \
+             : __hope_eq_llu, int                                              \
+             : __hope_eq_d, long                                               \
+             : __hope_eq_ld, long long                                         \
+             : __hope_eq_lld)((actual), (desired), file, line)
+#endif
 
 static void __hope_isnull(void const *addr, int cond, char const *expr,
                           char const *file, int line)

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.5.1 FATAL_ERROR)
 # Generate compile_commands.json file
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(hope LANGUAGES C VERSION 0.0.2)
+project(hope LANGUAGES C VERSION 0.0.3)
 set(PROJECT_DESCRIPTION "Testing library for the C language.")
 
 if(${CMAKE_C_COMPILER_ID} MATCHES "MSVC")
