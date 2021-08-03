@@ -6,7 +6,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 project(
   hope
   LANGUAGES C
-  VERSION 0.0.4)
+  VERSION 0.0.5)
 set(PROJECT_DESCRIPTION "Testing library for the C language.")
 
 if(${CMAKE_C_COMPILER_ID} MATCHES "MSVC")

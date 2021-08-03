@@ -34,8 +34,8 @@ static void __hope_close2(double actual, double desired, double rel_tol,
     {
         __hope_print_context(file, line);
         fprintf(stderr, " Items are not close:\n");
-        fprintf(stderr, "  ACTUAL : %.10f\n", (double)a);
-        fprintf(stderr, "  DESIRED: %.10f\n", (double)d);
+        fprintf(stderr, "  ACTUAL : %.11f\n", (double)a);
+        fprintf(stderr, "  DESIRED: %.11f\n", (double)d);
         __hope_print_newline();
         ++__hope_errors;
     }
