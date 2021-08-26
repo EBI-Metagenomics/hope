@@ -83,28 +83,26 @@ __MAKE_EQ(lld, long long, "lld")
              char *: __hope_eq_str,                                            \
              char const *: __hope_eq_str)((actual), (desired), file, line)
 
-static void __hope_isnull(void const *addr, int cond, char const *expr,
-                          char const *file, int line)
+static void __hope_isnull(int cond, char const *expr, char const *file,
+                          int line)
 {
     if (cond)
     {
         __hope_print_context(file, line);
         fprintf(stderr, " Address should be NULL:\n");
-        fprintf(stderr, "  ADDRESS   : %p\n", addr);
         fprintf(stderr, "  EXPRESSION: %s\n", expr);
         __hope_print_newline();
         ++__hope_errors;
     }
 }
 
-static void __hope_notnull(void const *addr, int cond, char const *expr,
-                           char const *file, int line)
+static void __hope_notnull(int cond, char const *expr, char const *file,
+                           int line)
 {
     if (cond)
     {
         __hope_print_context(file, line);
         fprintf(stderr, " Address should not be NULL:\n");
-        fprintf(stderr, "  ADDRESS   : %p\n", addr);
         fprintf(stderr, "  EXPRESSION: %s\n", expr);
         __hope_print_newline();
         ++__hope_errors;

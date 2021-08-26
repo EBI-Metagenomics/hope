@@ -12,11 +12,9 @@
 
 #define EQ(actual, desired) __hope_eq((actual), (desired), __FILE__, __LINE__)
 
-#define ISNULL(a)                                                              \
-    __hope_isnull((void const *)(a), (a) != NULL, #a, __FILE__, __LINE__)
+#define ISNULL(a) __hope_isnull((a) != NULL, #a, __FILE__, __LINE__)
 
-#define NOTNULL(a)                                                             \
-    __hope_notnull((void const *)(a), (a) == NULL, #a, __FILE__, __LINE__)
+#define NOTNULL(a) __hope_notnull((a) == NULL, #a, __FILE__, __LINE__)
 
 #define COND(a) __hope_cond(#a, !(a), __FILE__, __LINE__)
 
