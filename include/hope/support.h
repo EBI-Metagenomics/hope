@@ -81,7 +81,8 @@ __MAKE_EQ(lld, long long, "lld")
              long long: __hope_eq_lld,                                         \
              char: __hope_eq_char,                                             \
              char *: __hope_eq_str,                                            \
-             char const *: __hope_eq_str)((actual), (desired), file, line)
+             char const *: __hope_eq_str,\
+             FILE *: __hope_eq_file)((actual), (desired), file, line)
 
 static void __hope_isnull(int cond, char const *expr, char const *file,
                           int line)
@@ -134,6 +135,50 @@ static void __hope_eq_str(char const *a, char const *d, char const *file,
         __hope_print_newline();
         ++__hope_errors;
     }
+}
+
+static void __hope_eq_file(FILE *restrict a, FILE *restrict d, char const *file,
+                           int line)
+{
+    char abuff[128];
+    char dbuff[128];
+    char *act = NULL;
+    char *des = NULL;
+    for (;;)
+    {
+        if (!(act = fgets(abuff, sizeof abuff, a)) && ferror(a))
+            goto io_error;
+        if (!(des = fgets(dbuff, sizeof dbuff, d)) && ferror(d))
+            goto io_error;
+
+        if (feof(a) != feof(d))
+        {
+            __hope_print_context(file, line);
+            fprintf(stderr, " Files are not equal:\n");
+            fprintf(stderr, "  End-of-files did not occurr simultaneously\n");
+            __hope_print_newline();
+            ++__hope_errors;
+            return;
+        }
+        if (strcmp(abuff, dbuff) != 0)
+        {
+            __hope_print_context(file, line);
+            fprintf(stderr, " Files are not equal:\n");
+            fprintf(stderr, "  ACTUAL : %s\n", abuff);
+            fprintf(stderr, "  DESIRED: %s\n", dbuff);
+            __hope_print_newline();
+            ++__hope_errors;
+            return;
+        }
+    }
+    return;
+
+io_error:
+    __hope_print_context(file, line);
+    perror("failed to fgets");
+    __hope_print_newline();
+    ++__hope_errors;
+    return;
 }
 
 static void __hope_cond(char const *expr, int cond, char const *file, int line)
