@@ -142,13 +142,11 @@ static void __hope_eq_file(FILE *restrict a, FILE *restrict d, char const *file,
 {
     char abuff[128];
     char dbuff[128];
-    char *act = NULL;
-    char *des = NULL;
-    for (;;)
+    while (!feof(a) && !feof(d))
     {
-        if (!(act = fgets(abuff, sizeof abuff, a)) && ferror(a))
+        if (!fgets(abuff, sizeof abuff, a) && ferror(a))
             goto io_error;
-        if (!(des = fgets(dbuff, sizeof dbuff, d)) && ferror(d))
+        if (!fgets(dbuff, sizeof dbuff, d) && ferror(d))
             goto io_error;
 
         if (feof(a) != feof(d))
