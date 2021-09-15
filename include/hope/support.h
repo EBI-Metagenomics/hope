@@ -67,6 +67,7 @@ __MAKE_EQ(d, int, "d")
 __MAKE_EQ(ld, long, "ld")
 __MAKE_EQ(lld, long long, "lld")
 
+#ifndef _WIN32
 #define __hope_eq(actual, desired, file, line)                                 \
     _Generic((actual),                                                         \
              unsigned char: __hope_eq_hhu,                                     \
@@ -83,6 +84,23 @@ __MAKE_EQ(lld, long long, "lld")
              char *: __hope_eq_str,                                            \
              char const *: __hope_eq_str,\
              FILE *: __hope_eq_file)((actual), (desired), file, line)
+#else
+/* Bug: https://is.gd/DWxyJO */
+#define __hope_eq(actual, desired, file, line)                                 \
+    _Generic((actual),                                                         \
+             unsigned short: __hope_eq_hu,                                     \
+             unsigned int: __hope_eq_u,                                        \
+             unsigned long: __hope_eq_lu,                                      \
+             unsigned long long: __hope_eq_llu,                                \
+             short: __hope_eq_hd,                                              \
+             int: __hope_eq_d,                                                 \
+             long: __hope_eq_ld,                                               \
+             long long: __hope_eq_lld,                                         \
+             char: __hope_eq_char,                                             \
+             char *: __hope_eq_str,                                            \
+             char const *: __hope_eq_str,\
+             FILE *: __hope_eq_file)((actual), (desired), file, line)
+#endif
 
 static void __hope_isnull(int cond, char const *expr, char const *file,
                           int line)
