@@ -24,11 +24,11 @@ else()
       -Wno-unused-parameter
       -Wsign-conversion
       -Wno-unused-function)
-endif()
 
-if(NOT CMAKE_C_COMPILER_ID STREQUAL "GNU")
-  list(APPEND WARNING_FLAGS -Wno-gnu-designator -Wno-empty-translation-unit
-       -Wno-gnu-statement-expression -Wno-nullability-extension)
+  if(NOT CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    list(APPEND WARNING_FLAGS -Wno-gnu-designator -Wno-empty-translation-unit
+         -Wno-gnu-statement-expression -Wno-nullability-extension)
+  endif()
 endif()
 
 add_library(hope INTERFACE)
