@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
 # Generate compile_commands.json file
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -6,22 +6,29 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 project(
   hope
   LANGUAGES C
-  VERSION 0.0.8)
+  VERSION 0.0.9)
 set(PROJECT_DESCRIPTION "Testing library for the C language.")
 
-if(${CMAKE_C_COMPILER_ID} MATCHES "MSVC")
-  set(WARNING_FLAGS /W3)
+if(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
+  # /wd5105:
+  # https://docs.microsoft.com/en-us/cpp/error-messages/compiler-warnings/c5105?view=msvc-160
+  set(WARNING_FLAGS /W3 /wd5105)
 else()
   set(WARNING_FLAGS
       -Wall
       -Wextra
-      -pedantic
       -Wstrict-prototypes
       -Wshadow
       -Wconversion
       -Wmissing-prototypes
       -Wno-unused-parameter
-      -Wsign-conversion)
+      -Wsign-conversion
+      -Wno-unused-function)
+endif()
+
+if(NOT CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  list(APPEND WARNING_FLAGS -Wno-gnu-designator -Wno-empty-translation-unit
+       -Wno-gnu-statement-expression -Wno-nullability-extension)
 endif()
 
 add_library(hope INTERFACE)
