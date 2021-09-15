@@ -1,7 +1,7 @@
 #include "hope/hope.h"
 #include <math.h>
 
-int main()
+int main(void)
 {
     char a = 'f';
     COND(3 == 3);
