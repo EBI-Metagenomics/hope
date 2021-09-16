@@ -10,8 +10,7 @@ project(
 set(PROJECT_DESCRIPTION "Testing library for the C language.")
 
 if(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
-  # /wd5105:
-  # https://docs.microsoft.com/en-us/cpp/error-messages/compiler-warnings/c5105?view=msvc-160
+  # /wd5105: https://is.gd/d407jh
   set(WARNING_FLAGS /W3 /wd5105)
 else()
   set(WARNING_FLAGS
