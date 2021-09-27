@@ -5,7 +5,7 @@ Testing library for C language.
 ## Install
 
 ```bash
-bash -c "$(curl -fsSL https://git.io/JuQ9f)" -s horta/hope
+bash -c "$(curl -fsSL https://git.io/Jz7Oa)" -s horta/hope
 ```
 
 ## Authors
