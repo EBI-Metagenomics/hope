@@ -6,7 +6,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 project(
   hope
   LANGUAGES C
-  VERSION 0.0.12)
+  VERSION 0.0.13)
 set(PROJECT_DESCRIPTION "Testing library for the C language.")
 
 if(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
@@ -48,7 +48,13 @@ target_include_directories(
                  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 target_link_libraries(hope INTERFACE $<$<BOOL:${UNIX}>:m>)
 
-install(TARGETS hope EXPORT hope-targets)
+install(
+  TARGETS hope
+  EXPORT hope-targets
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  PUBLIC_HEADER DESTINATION include)
 install(DIRECTORY include/ DESTINATION include)
 
 # Export the targets to a script
