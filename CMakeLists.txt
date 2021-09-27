@@ -48,13 +48,7 @@ target_include_directories(
                  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 target_link_libraries(hope INTERFACE $<$<BOOL:${UNIX}>:m>)
 
-install(
-  TARGETS hope
-  EXPORT hope-targets
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
-  PUBLIC_HEADER DESTINATION include)
+install(TARGETS hope EXPORT hope-targets)
 install(DIRECTORY include/ DESTINATION include)
 
 # Export the targets to a script
